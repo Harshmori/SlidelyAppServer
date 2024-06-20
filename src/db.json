@@ -1,30 +1,16 @@
 [
   {
     "name": "harshmori",
-    "email": "harsh69@gmail.com",
+    "email": "harsh001@gmail.com",
     "phone": "9737046675",
+    "github_link": "https://github.com/Harshmori",
+    "stopwatch_time": "00:00:10"
+  },
+  {
+    "name": "John Doe",
+    "email": "johndoe@gmail.com",
+    "phone": "1234567890",
     "github_link": "https://github.com/johndoe",
     "stopwatch_time": "00:00:00"
-  },
-  {
-    "name": "harsh",
-    "email": "harsh69@gmail.com",
-    "phone": "9737046675",
-    "github_link": "https://github.com/johndoe",
-    "stopwatch_time": "00:00:00"
-  },
-  {
-    "name": "harsh",
-    "email": "mori200@gmail.co",
-    "phone": "9558040160",
-    "github_link": "https://github.com/johndoe",
-    "stopwatch_time": "00:00:06"
-  },
-  {
-    "name": "harsh",
-    "email": "harshmori001@gmail.com",
-    "phone": "9737046674",
-    "github_link": "https://github.com/johndoe",
-    "stopwatch_time": "00:00:03"
   }
 ]

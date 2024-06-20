@@ -23,6 +23,10 @@ app.get('/ping', (req: Request, res: Response) => {
     res.send(true);
 });
 
+app.get('/', (req: Request, res: Response) => {
+    res.send('this is online db for slidelyAI task, try /ping and /read endpoints');
+});
+
 // Submit endpoint
 app.post('/submit', (req: Request, res: Response) => {
     try {
