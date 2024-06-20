@@ -1,3 +1,6 @@
+
+## watch the demo video 👉 [Demo Video](https://drive.google.com/file/d/1lnatM7KR2twpHj1vhA0Y-Lo5zMQbUnT6/view?usp=sharing)
+
 # Slidely Server
 
 ## Introduction
