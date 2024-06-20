@@ -73,5 +73,6 @@ Before you begin, ensure you have the following installed on your system:
    for using the mongodb as database whole script(`mongo-server.ts`) is given beside the server.ts , you just have to put your mongo db URL in place.
 
 
-
+![mongodb database image](mongo.png)
+*mongodb database image*
   
