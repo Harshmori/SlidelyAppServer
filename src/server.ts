@@ -1,6 +1,5 @@
 import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
-import path from 'path'; // Import path module to handle file paths
 import fs from 'fs';
 
 const app = express();
@@ -14,17 +13,9 @@ interface Submission {
     github_link: string;
     stopwatch_time: string;
     }
-
-// Define the path to db.json based on the current file location
-const dbPath = path.resolve(__dirname, 'db.json');
-
 // Ping endpoint
 app.get('/ping', (req: Request, res: Response) => {
     res.send(true);
-});
-
-app.get('/', (req: Request, res: Response) => {
-    res.send('this is online db for slidelyAI task, try /ping and /read endpoints');
 });
 
 // Submit endpoint
@@ -37,7 +28,7 @@ app.post('/submit', (req: Request, res: Response) => {
         }
 
         // Read the current submissions
-        fs.readFile(dbPath, 'utf8', (err, data) => {
+        fs.readFile('db.json', 'utf8', (err, data) => {
             if (err) {
                 console.error(err);
                 return res.status(500).send('Error reading database');
@@ -47,7 +38,7 @@ app.post('/submit', (req: Request, res: Response) => {
             submissions.push({ name, email, phone, github_link, stopwatch_time });
 
             // Write the updated submissions back to the JSON file
-            fs.writeFile(dbPath, JSON.stringify(submissions, null, 2), 'utf8', (err) => {
+            fs.writeFile('db.json', JSON.stringify(submissions, null, 2), 'utf8', (err) => {
                 if (err) {
                     console.error(err);
                     return res.status(500).send('Error writing to database');
@@ -66,7 +57,7 @@ app.post('/submit', (req: Request, res: Response) => {
 app.get('/read', (req: Request, res: Response) => {
     try {
         // Read the current submissions
-        fs.readFile(dbPath, 'utf8', (err, data) => {
+        fs.readFile('db.json', 'utf8', (err, data) => {
             if (err) {
                 console.error(err);
                 return res.status(500).send('Error reading database');
@@ -87,7 +78,7 @@ app.delete('/delete/:id', (req: Request, res: Response) => {
         const id = req.params.id;
 
         // Read the current submissions
-        fs.readFile(dbPath, 'utf8', (err, data) => {
+        fs.readFile('db.json', 'utf8', (err, data) => {
             if (err) {
                 console.error(err);
                 return res.status(500).send('Error reading database');
@@ -106,7 +97,7 @@ app.delete('/delete/:id', (req: Request, res: Response) => {
             submissions.splice(index, 1);
 
             // Write the updated submissions back to the JSON file
-            fs.writeFile(dbPath, JSON.stringify(submissions, null, 2), 'utf8', (err) => {
+            fs.writeFile('db.json', JSON.stringify(submissions, null, 2), 'utf8', (err) => {
                 if (err) {
                     console.error(err);
                     return res.status(500).send('Error writing to database');
@@ -126,7 +117,7 @@ app.delete('/delete/:id', (req: Request, res: Response) => {
 app.get('/search/:field/:value', (req: Request, res: Response) => {
     const field = req.params.field.toLowerCase();
     const value = req.params.value.toLowerCase();
-    fs.readFile(dbPath, 'utf8', (err, data) => {
+    fs.readFile('db.json', 'utf8', (err, data) => {
         if (err) {
             return res.status(500).send('Error reading database');
         }
@@ -154,7 +145,7 @@ app.put('/edit/:index', (req: Request, res: Response) => {
         const { name, email, phone, github_link, stopwatch_time } = req.body;
 
         // Read the current submissions
-        fs.readFile(dbPath, 'utf8', (err, data) => {
+        fs.readFile('db.json', 'utf8', (err, data) => {
             if (err) {
                 console.error(err);
                 return res.status(500).send('Error reading database');
@@ -166,7 +157,7 @@ app.put('/edit/:index', (req: Request, res: Response) => {
             submissions[index] = { name, email, phone, github_link, stopwatch_time };
 
             // Write the updated submissions back to the JSON file
-            fs.writeFile(dbPath, JSON.stringify(submissions, null, 2), 'utf8', (err) => {
+            fs.writeFile('db.json', JSON.stringify(submissions, null, 2), 'utf8', (err) => {
                 if (err) {
                     console.error(err);
                     return res.status(500).send('Error writing to database');

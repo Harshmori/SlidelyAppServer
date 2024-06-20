@@ -5,13 +5,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const body_parser_1 = __importDefault(require("body-parser"));
-const path_1 = __importDefault(require("path")); // Import path module to handle file paths
 const fs_1 = __importDefault(require("fs"));
 const app = (0, express_1.default)();
 const PORT = 3000;
 app.use(body_parser_1.default.json());
-// Define the path to db.json based on the current file location
-const dbPath = path_1.default.resolve(__dirname, 'db.json');
 // Ping endpoint
 app.get('/ping', (req, res) => {
     res.send(true);
@@ -24,7 +21,7 @@ app.post('/submit', (req, res) => {
             return res.status(400).send('Missing required fields');
         }
         // Read the current submissions
-        fs_1.default.readFile(dbPath, 'utf8', (err, data) => {
+        fs_1.default.readFile('db.json', 'utf8', (err, data) => {
             if (err) {
                 console.error(err);
                 return res.status(500).send('Error reading database');
@@ -32,7 +29,7 @@ app.post('/submit', (req, res) => {
             const submissions = JSON.parse(data);
             submissions.push({ name, email, phone, github_link, stopwatch_time });
             // Write the updated submissions back to the JSON file
-            fs_1.default.writeFile(dbPath, JSON.stringify(submissions, null, 2), 'utf8', (err) => {
+            fs_1.default.writeFile('db.json', JSON.stringify(submissions, null, 2), 'utf8', (err) => {
                 if (err) {
                     console.error(err);
                     return res.status(500).send('Error writing to database');
@@ -50,7 +47,7 @@ app.post('/submit', (req, res) => {
 app.get('/read', (req, res) => {
     try {
         // Read the current submissions
-        fs_1.default.readFile(dbPath, 'utf8', (err, data) => {
+        fs_1.default.readFile('db.json', 'utf8', (err, data) => {
             if (err) {
                 console.error(err);
                 return res.status(500).send('Error reading database');
@@ -69,7 +66,7 @@ app.delete('/delete/:id', (req, res) => {
     try {
         const id = req.params.id;
         // Read the current submissions
-        fs_1.default.readFile(dbPath, 'utf8', (err, data) => {
+        fs_1.default.readFile('db.json', 'utf8', (err, data) => {
             if (err) {
                 console.error(err);
                 return res.status(500).send('Error reading database');
@@ -83,7 +80,7 @@ app.delete('/delete/:id', (req, res) => {
             // Remove the submission at the found index
             submissions.splice(index, 1);
             // Write the updated submissions back to the JSON file
-            fs_1.default.writeFile(dbPath, JSON.stringify(submissions, null, 2), 'utf8', (err) => {
+            fs_1.default.writeFile('db.json', JSON.stringify(submissions, null, 2), 'utf8', (err) => {
                 if (err) {
                     console.error(err);
                     return res.status(500).send('Error writing to database');
@@ -101,7 +98,7 @@ app.delete('/delete/:id', (req, res) => {
 app.get('/search/:field/:value', (req, res) => {
     const field = req.params.field.toLowerCase();
     const value = req.params.value.toLowerCase();
-    fs_1.default.readFile(dbPath, 'utf8', (err, data) => {
+    fs_1.default.readFile('db.json', 'utf8', (err, data) => {
         if (err) {
             return res.status(500).send('Error reading database');
         }
@@ -123,7 +120,7 @@ app.put('/edit/:index', (req, res) => {
         const index = req.params.index;
         const { name, email, phone, github_link, stopwatch_time } = req.body;
         // Read the current submissions
-        fs_1.default.readFile(dbPath, 'utf8', (err, data) => {
+        fs_1.default.readFile('db.json', 'utf8', (err, data) => {
             if (err) {
                 console.error(err);
                 return res.status(500).send('Error reading database');
@@ -132,7 +129,7 @@ app.put('/edit/:index', (req, res) => {
             // Update the submission at the specified index
             submissions[index] = { name, email, phone, github_link, stopwatch_time };
             // Write the updated submissions back to the JSON file
-            fs_1.default.writeFile(dbPath, JSON.stringify(submissions, null, 2), 'utf8', (err) => {
+            fs_1.default.writeFile('db.json', JSON.stringify(submissions, null, 2), 'utf8', (err) => {
                 if (err) {
                     console.error(err);
                     return res.status(500).send('Error writing to database');
